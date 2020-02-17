@@ -12,6 +12,7 @@ class App extends Component {
         <div className="text-center">
             <h1>Task Mamagement</h1>
             <hr/>
+            
         </div>
         <div className="row">
 
