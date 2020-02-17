@@ -15,7 +15,7 @@ class App extends Component {
         </div>
         <div className="row">
 
-        		{/*FORM*/}
+        		{/*FORM*/} {/*FORM*/}
             <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
              	<TaskForm/>
             </div>
