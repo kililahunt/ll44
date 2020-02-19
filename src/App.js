@@ -10,7 +10,8 @@ class App extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			tasks : []
+			tasks : [],
+            isDisplayForm : false
 		}
 	}
 
@@ -24,31 +25,6 @@ class App extends Component {
 	}
 	
 
-	onGenerateData = () => {
-		var tasks = [
-			{
-				id :  this.generateID() ,
-				name : 'First Task',
-				status : true
-			},
-			{
-				id :  this.generateID() ,
-				name: 'Doumemm',
-				status: false
-			},
-			{
-				id : this.generateID() ,
-				name: 'Final',
-				status: true
-			}
-		];
-		this.setState({
-			tasks : tasks
-		});
-
-		localStorage.setItem('tasks', JSON.stringify(tasks));
-
-	}
 
 	s4()
 	{
@@ -60,9 +36,34 @@ class App extends Component {
 		return this.s4() + this.s4() + '-' + this.s4();
 	}
 
+    showTask = () =>
+    {
+        this.setState({
+            isDisplayForm: !this.state.isDisplayForm
+        });
+    }
+
+    onCloseForm = () => {
+        this.setState({
+            isDisplayForm: false
+        });
+    }
+
+    onSubmit = (data) => {
+        var {tasks} = this.state;
+        data.id = this.generateID();
+        tasks.push(data);
+        this.setState({
+            tasks : tasks
+        });
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+    }
+
 	render() {
 
-		var {tasks} = this.state ;
+		var {tasks, isDisplayForm} = this.state ;
+        var eleForm = (isDisplayForm ?
+             <TaskForm onSubmit = {this.onSubmit} onCloseForm = {this.onCloseForm}/> : '');
 
 		return (
 			<div className="container">
@@ -74,22 +75,20 @@ class App extends Component {
         <div className="row">
 
         		
-            <div className="col-xs-4 col-sm-4 col-md-4 col-lg-4">
-             	<TaskForm/>
+            <div className= {isDisplayForm ? 'col-xs-4 col-sm-4 col-md-4 col-lg-4' : ''}>
+             	{eleForm}
             </div>
 
-            <div className="col-xs-8 col-sm-8 col-md-8 col-lg-8">
-                <button type="button" className="btn btn-primary">
+            <div className= {isDisplayForm?'col-xs-8 col-sm-8 col-md-8 col-lg-8': 'col-xs-12 col-sm-12 col-md-12 col-lg-12'}>
+                <button 
+                    type="button" 
+                    className="btn btn-primary"
+                    onClick = {this.showTask}
+                >
                     <span className="fa fa-plus mr-5"></span>Add Task
                 </button>
 
-                <button 
-                	type="button" 
-                	className="btn btn-danger ml-5"
-                	onClick = {this.onGenerateData}
-                	>
-                    <span className="fa fa-plus mr-5"></span>Generate
-                </button>
+            
 
              {/*SEARCH*/}
                 <div className="row mt-15">
