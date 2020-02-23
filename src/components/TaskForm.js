@@ -3,12 +3,35 @@ import React, {Component} from 'react';
 class TaskForm extends Component {
 
     constructor(props) {
-      super(props);
-    
+      super(props);  
       this.state = {
+        id : '',
         name : '',
         status : true
       };
+    }
+
+    componentWillMount() {
+        
+    }
+     
+    componentWillReceiveProps(nextProps) {
+       if (nextProps && nextProps.taskEditing)
+        {
+        this.setState({
+            id : nextProps.taskEditing.id,
+            name : nextProps.taskEditing.name,
+            status : nextProps.taskEditing.status
+        });
+        console.log(this.state);
+        } else if (!nextProps.taskEditing)
+        {
+            this.setState({
+                id : '',
+                name : '',
+                status : true
+            })
+        }
     }
 
     onHandleClose = () =>{
@@ -42,11 +65,14 @@ class TaskForm extends Component {
     }
 
 	render() {
+
+        var {id} = this.state;
+
 		return(
 			  <div className="panel panel-warning">
                     <div className="panel-heading">
                         <h3 className="panel-title">
-                            Add Task
+                            {(id !== '') ? 'Edit Task' : 'Add Task'}
                                 <span
                                 className = "fa fa-times-circle text-right"
                                 onClick = {this.onHandleClose}
@@ -79,7 +105,7 @@ class TaskForm extends Component {
                             </select>
                             <br/>
                             <div className="text-center">
-                                <button type="submit" className="btn btn-warning">Add</button>&nbsp;
+                                <button type="submit" className="btn btn-warning">Save</button>&nbsp;
                                 <button onClick = {this.onClear} type="button" className="btn btn-danger">Clear</button>
                             </div>
                         </form>

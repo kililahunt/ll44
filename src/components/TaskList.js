@@ -3,7 +3,6 @@ import TaskItem from './TaskItem';
 
 class TaskList extends Component {
 
-
 	render() {
 
         var {tasks} = this.props;
@@ -15,6 +14,7 @@ class TaskList extends Component {
                 task = {task}
                 onUpdateStatus = {this.props.onUpdateStatus}
                 onDelete = {this.props.onDelete}
+                onUpdate = {this.props.onUpdate}
             />
         });
 
