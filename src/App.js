@@ -17,7 +17,12 @@ class App extends Component {
                 name : '',
                 status : -1
             },
-            keyWord : ''
+            keyWord : '',
+            mainFilter : 
+                {
+                by : 'name',
+                status : 1
+            }
 		}
 	}
 
@@ -127,6 +132,13 @@ class App extends Component {
         });
     }
 
+    onMainFilter = (data) => {
+        var filter = data;
+        this.setState({
+            mainFilter : filter
+        });
+    } 
+
     onSearch = (keyWord) => {
         this.setState({
             keyWord : keyWord
@@ -146,7 +158,7 @@ class App extends Component {
 
 	render() {
 
-		var {tasks, isDisplayForm, filter, keyWord} = this.state;
+		var {tasks, isDisplayForm, filter, keyWord, mainFilter} = this.state;
         if (filter) {
             if (filter.name)
             {
@@ -170,6 +182,22 @@ class App extends Component {
                 });
             }
 
+        console.log(mainFilter);
+
+        if (mainFilter.by === 'name') {
+            tasks.sort((a, b) => {
+                if (a.name > b.name) return mainFilter.status;
+                else if (a.name < b.name) return -mainFilter.status;
+                else return 0;
+            });
+        } else if (mainFilter.by === 'status') {
+            tasks.sort((a, b) => {
+                if (a.status > b.status) return -mainFilter.status;
+                else if (a.status < b.status) return mainFilter.status;
+                else return 0;
+            });
+        }
+        
         var eleForm = (isDisplayForm ?
              <TaskForm 
                 onSubmit = {this.onSubmit}
@@ -203,7 +231,10 @@ class App extends Component {
 
              {/*SEARCH*/}
                 <div className="row mt-15">
-                    <Control onSearch = {this.onSearch}/>
+                    <Control 
+                        onSearch = {this.onSearch}
+                        onMainFilter = {this.onMainFilter}
+                    />
                 </div>
 
                 <div className="row mt-15">

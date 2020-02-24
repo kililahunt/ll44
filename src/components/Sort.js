@@ -1,7 +1,32 @@
 import React, { Component } from 'react'
 
 class Sort extends Component {
+
+    constructor(props) {
+      super(props);
+    
+      this.state = {
+        mainFilter : {
+            by : 'name',
+            status : 1
+        }
+      };
+    }
+
+    onMainFilter = (by, status) => {
+        var filter = {
+            by : by,
+            status : status
+        }
+        this.setState({
+            mainFilter : filter
+        });
+        this.props.onMainFilter(filter);
+    }
+
 	render() {
+
+        var {mainFilter} = this.state;
 		return (
 			<div>
 				
@@ -12,23 +37,31 @@ class Sort extends Component {
                             Filter <span className="fa fa-caret-square-o-down ml-5"></span>
                         </button>
                         <ul className="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li>
-                                <a role="button">
+                            <li onClick = {() => this.onMainFilter('name',1)}>
+                                <a className = {(mainFilter.by === 'name' && mainFilter.status === 1)?'sort_selected':''}
+                                     role="button">
                                             <span className="fa fa-sort-alpha-asc pr-5">
                                                 Name A-Z
                                             </span>
                                         </a>
                             </li>
-                            <li>
-                                <a role="button">
+                            <li onClick = {() => this.onMainFilter('name',-1)}>
+                                <a className = {(mainFilter.by === 'name' && mainFilter.status === -1)?'sort_selected':''}
+                                 role="button">
                                             <span className="fa fa-sort-alpha-desc pr-5">
                                                 Name Z-A
                                             </span>
                                         </a>
                             </li>
                             <li role="separator" className="divider"></li>
-                            <li><a role="button">Active Status</a></li>
-                            <li><a role="button">Deactive Status</a></li>
+                            <li onClick = {() => this.onMainFilter('status',1)}> 
+                                <a className = {(mainFilter.by === 'status' && mainFilter.status === 1)?'sort_selected':''}
+                                    role="button">Active Status</a>
+                            </li>
+                            <li onClick = {() => this.onMainFilter('status',-1)}>
+                                <a className = {(mainFilter.by === 'status' && mainFilter.status === -1)?'sort_selected':''} 
+                                 role="button">Deactive Status</a>
+                            </li>
                         </ul>
                     </div>
 
