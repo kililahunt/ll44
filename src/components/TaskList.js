@@ -27,8 +27,6 @@ class TaskList extends Component {
 	render() {
 
         var {tasks} = this.props;
-        var {filterName, filterStatus} = this.state;
-
 
         var ele = tasks.map((task, index) => {
             return <TaskItem

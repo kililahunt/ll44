@@ -16,7 +16,8 @@ class App extends Component {
             filter : {
                 name : '',
                 status : -1
-            }
+            },
+            keyWord : ''
 		}
 	}
 
@@ -83,7 +84,7 @@ class App extends Component {
     onUpdateStatus = (id) =>{
     	var {tasks} = this.state;
     	var index = this.findIndex(id);
-    	if (index != -1) {
+    	if (index !== -1) {
     		tasks[index].status = !tasks[index].status;
     	}
     	this.setState({
@@ -96,7 +97,7 @@ class App extends Component {
     onDelete = (id) =>{
     	var {tasks} = this.state;
     	var index = this.findIndex(id);
-    	if (index != -1) {
+    	if (index !== -1) {
     		console.log(index);
     		tasks.splice(index, 1);
     	}
@@ -126,6 +127,12 @@ class App extends Component {
         });
     }
 
+    onSearch = (keyWord) => {
+        this.setState({
+            keyWord : keyWord
+        });
+    }
+
    findIndex = (id) => {
    		var {tasks} = this.state;
    		var result = -1;
@@ -139,7 +146,7 @@ class App extends Component {
 
 	render() {
 
-		var {tasks, isDisplayForm, filter} = this.state;
+		var {tasks, isDisplayForm, filter, keyWord} = this.state;
         if (filter) {
             if (filter.name)
             {
@@ -155,6 +162,13 @@ class App extends Component {
                 }
             });
         }
+
+        if (keyWord)
+            {
+                tasks = tasks.filter((task) => {
+                    return task.name.toLowerCase().indexOf(keyWord) !== -1;
+                });
+            }
 
         var eleForm = (isDisplayForm ?
              <TaskForm 
@@ -189,7 +203,7 @@ class App extends Component {
 
              {/*SEARCH*/}
                 <div className="row mt-15">
-                    <Control/>
+                    <Control onSearch = {this.onSearch}/>
                 </div>
 
                 <div className="row mt-15">
