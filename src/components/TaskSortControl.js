@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 
-class Sort extends Component {
+class TaskSortControl extends Component {
 
     constructor(props) {
       super(props);
@@ -71,4 +71,4 @@ class Sort extends Component {
 	}
 }
 
-export default Sort;
+export default TaskSortControl;

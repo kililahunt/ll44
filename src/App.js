@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import TaskForm from './components/TaskForm';
-import Control from './components/Control';
+import TaskControl from './components/TaskControl';
 import TaskList from './components/TaskList';
 
 
@@ -231,7 +231,7 @@ class App extends Component {
 
              {/*SEARCH*/}
                 <div className="row mt-15">
-                    <Control 
+                    <TaskControl 
                         onSearch = {this.onSearch}
                         onMainFilter = {this.onMainFilter}
                     />
